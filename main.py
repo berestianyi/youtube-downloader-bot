@@ -43,7 +43,7 @@ def get_video_title(video_url):
 
 @dp.message(CommandStart())
 async def start_command(message: Message):
-    await message.reply(f'Hello, {message.from_user.first_name}.\n I will help you to download any video from youtube!')
+    await message.reply(f'Привіт, {message.from_user.first_name}.\n Я бот який допоможе тобі скачати відео з ютубу!')
 
 
 @dp.message(F.text.regexp(r'^https:\/\/(www\.youtube.*|youtu\.be.*|youtube\.com.*)'))
@@ -51,9 +51,13 @@ async def link_answer_handler(message: Message):
     url = str(message.text)
     direct_link = get_direct_link(url)
     video_title = get_video_title(url)
-    text = html.link(f'Download link of video: \n\n {video_title}', html.quote(direct_link))
+    text = html.link(f'Силка для скачування: \n\n {video_title}', html.quote(direct_link))
     await message.answer(text, parse_mode="HTML")
 
+
+@dp.message(F.text)
+async def text_handler(message: Message):
+    await message.answer('Для того щоб скачати відео з ютубу, скиньте силку')
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
